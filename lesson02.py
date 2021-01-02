@@ -26,6 +26,20 @@ books = pd.DataFrame({'author_id': [1, 1, 1, 2, 2, 3, 3],
                     }, columns = ['author_id', 'book_title']
 )
 
+# """
+# task2
+# Получите датафрейм authors_price, соединив датафреймы authors и books по полю author_id.
+# """
 
+# In[4]:
+authors_price = pd.merge(authors, books, on = 'author_id', how = 'inner')
 
+# """
+# task3
+# Создайте датафрейм top5, в котором содержатся строки из authors_price с пятью самыми дорогими книгами.
+# """
+
+# In[5]:
+top5 = authors_price.sort_values(by='price', ascending=False).head(5)
+top5.reset_index(drop = True)
 
