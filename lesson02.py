@@ -43,3 +43,17 @@ authors_price = pd.merge(authors, books, on = 'author_id', how = 'inner')
 top5 = authors_price.sort_values(by='price', ascending=False).head(5)
 top5.reset_index(drop = True)
 
+# """
+# task4
+# Создайте датафрейм authors_stat на основе информации из authors_price. 
+# В датафрейме authors_stat должны быть четыре столбца:
+# author_name, min_price, max_price и mean_price,
+# в которых должны содержаться соответственно 
+# имя автора,минимальная, максимальная и средняя цена на книги этого автора
+# """
+
+authors_stat = authors_price.groupby(['author_name']).agg({
+	 'price': ['min', 'max', 'mean']
+}).reset_index()
+authors_stat.columns = ['author_name', 'min_price', 'max_price', 'mean_price']
+authors_stat
