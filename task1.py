@@ -44,3 +44,18 @@ a_centered
 #       [-1. , -1.4]])
 #
 
+# """
+# task3
+# Найдите скалярное произведение столбцов массива a_centered. 
+# В результате должна получиться величина a_centered_sp. 
+# Затем поделите a_centered_sp на N-1, где N - число наблюдений.
+# """
+
+# In[5]:
+a_centered_sp = np.dot(a_centered[:, 0], a_centered[:, 1])
+n = a_centered.shape[0]
+a_centered_sp /= (n -1)
+a_centered_sp
+
+# Out[5]
+# 2.0
