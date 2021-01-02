@@ -52,8 +52,47 @@ top5.reset_index(drop = True)
 # имя автора,минимальная, максимальная и средняя цена на книги этого автора
 # """
 
+# In[6]:
 authors_stat = authors_price.groupby(['author_name']).agg({
 	 'price': ['min', 'max', 'mean']
 }).reset_index()
 authors_stat.columns = ['author_name', 'min_price', 'max_price', 'mean_price']
 authors_stat
+
+# """
+# task5
+# Создайте новый столбец в датафрейме authors_price под названием cover, 
+# в нем будут располагаться данные о том, какая обложка у данной книги - твердая или мягкая. 
+# В этот столбец поместите данные из следующего списка:
+# ['твердая', 'мягкая', 'мягкая', 'твердая', 'твердая', 'мягкая', 'мягкая'].
+# Для каждого автора посчитайте суммарную стоимость книг в твердой и мягкой обложке. Используйте для этого функцию pd.pivot_table. 
+# При этом столбцы должны 
+# называться "твердая" и "мягкая", а индексами должны быть фамилии авторов.
+# Пропущенные значения стоимостей заполните нулями.
+# Назовите полученный датасет book_info и сохраните его в формат pickle под названием "book_info.pkl".
+# Затем загрузите из этого файла датафрейм и назовите его book_info2. 
+# Удостоверьтесь, что датафреймы book_info и book_info2 идентичны.
+# """
+
+# In[7]:
+authors_price['cover'] = ['твердая', 'мягкая', 'мягкая', 'твердая', 'твердая', 'мягкая', 'мягкая']
+authors_price
+
+# In[8]:
+import numpy as np
+
+# In[9]:
+book_info = pd.pivot_table(authors_price, 
+                           values='price', 
+                           index=['author_name'], 
+                           columns=['cover'], 
+                           aggfunc=np.sum, 
+                           fill_value=0)
+book_info
+
+# In[10]:
+book_info.to_pickle("./book_info.pkl")
+
+# In[11]:
+book_info2 = pd.read_pickle("./book_info.pkl")
+book_info2
